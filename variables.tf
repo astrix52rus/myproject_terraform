@@ -16,8 +16,4 @@ variable "token" {
   sensitive = true
 }
 
-variable "ssh_rebrain_key" {
-  type = string
-  sensitive = true
-}
 
