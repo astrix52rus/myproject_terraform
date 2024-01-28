@@ -14,6 +14,10 @@ data "external" "rebrain" {
  }
 }
 
+data "aws_route53_zone" "selected" {
+  name = "devops.rebrain.srwx.net"
+}  
+
 resource "digitalocean_droplet" "web" {
   image  = "ubuntu-20-04-x64"
   name   = "web-1"
@@ -23,4 +27,10 @@ resource "digitalocean_droplet" "web" {
   ssh_keys = [var.ssh_key, data.external.rebrain.result["id"]]
 }
 
-
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "raririri1245@gmail.com.devops.rebrain.srwx.net"
+  type    = "A"
+  ttl     = 300
+  records = [digitalocean_droplet.web.ipv4_address]
+}
