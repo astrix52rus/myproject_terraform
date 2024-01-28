@@ -9,8 +9,10 @@ resource "digitalocean_tag" "email" {
 
 data "external" "rebrain" {
  program = ["bash", "${path.module}/script.sh"]
+ query = {
+    arg1 = var.token
+ }
 }
-
 
 resource "digitalocean_droplet" "web" {
   image  = "ubuntu-20-04-x64"
