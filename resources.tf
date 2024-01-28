@@ -7,9 +7,10 @@ resource "digitalocean_tag" "email" {
     name = var.email
 }
 
-data "digitalocean_ssh_key" "ssh_key" {
-  name = "REBRAIN.SSH.PUB.KEY"
+data "external" "rebrain" {
+ program = ["bash", "${path.module}/script.sh"]
 }
+
 
 resource "digitalocean_droplet" "web" {
   image  = "ubuntu-20-04-x64"
@@ -17,7 +18,7 @@ resource "digitalocean_droplet" "web" {
   region = "fra1"
   size   = "s-1vcpu-1gb"
   tags   = [digitalocean_tag.task.id, digitalocean_tag.email.id]
-  ssh_keys = [var.ssh_key, data.digitalocean_ssh_key.ssh_key.id]
+  ssh_keys = [var.ssh_key, data.external.rebrain.result["id"]]
 }
 
 
