@@ -26,5 +26,7 @@ variable "secret_key" {
   sensitive = true
 }
 
-
+locals {
+  ip = digitalocean_droplet.web.ipv4_address
+}
 

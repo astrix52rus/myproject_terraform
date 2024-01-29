@@ -1,12 +1,3 @@
-
-resource "digitalocean_tag" "task" {
-    name = var.task
-}
-
-resource "digitalocean_tag" "email" {
-    name = var.email
-}
-
 data "external" "rebrain" {
  program = ["bash", "${path.module}/script.sh"]
  query = {
@@ -17,6 +8,15 @@ data "external" "rebrain" {
 data "aws_route53_zone" "selected" {
   name = "devops.rebrain.srwx.net"
 }  
+
+resource "digitalocean_tag" "email" {
+    name = var.email
+}
+
+resource "digitalocean_tag" "task" {
+    name = var.task
+}
+
 
 resource "digitalocean_droplet" "web" {
   image  = "ubuntu-20-04-x64"
@@ -29,8 +29,8 @@ resource "digitalocean_droplet" "web" {
 
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = "raririri1245@gmail.com.devops.rebrain.srwx.net"
+  name    = var.email
   type    = "A"
   ttl     = 300
-  records = [digitalocean_droplet.web.ipv4_address]
+  records = [local.ip]
 }
