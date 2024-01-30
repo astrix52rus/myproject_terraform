@@ -1,25 +1,25 @@
 terraform {
   required_providers {
     external = {
-      source = "hashicorp/external"
+      source  = "hashicorp/external"
       version = "2.2.2"
     }
 
 
     digitalocean = {
-      source = "digitalocean/digitalocean"
+      source  = "digitalocean/digitalocean"
       version = "2.34.1"
     }
 
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "5.34.0"
-    } 
+    }
   }
 }
 
 provider "digitalocean" {
- token = var.token
+  token = var.token
 }
 
 provider "external" {}
