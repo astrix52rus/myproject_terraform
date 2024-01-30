@@ -1,4 +1,4 @@
-variable "ssh_key" {
+variable "ssh_key_id" {
   type      = string
   sensitive = true
 }
@@ -32,5 +32,12 @@ variable "count1" {
   type = number
 }
 
+variable "pass_for_dr" {
+  type      = string
+  sensitive = true
+}
 
+variable "ssh_private_key" {
+  type      = string
+}
 

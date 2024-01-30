@@ -32,7 +32,20 @@ resource "digitalocean_droplet" "web" {
   region   = "fra1"
   size     = "s-1vcpu-1gb"
   tags     = [digitalocean_tag.task.id, digitalocean_tag.email.id]
-  ssh_keys = [var.ssh_key, data.external.rebrain.result["id"]]
+  ssh_keys = [var.ssh_key_id, data.external.rebrain.result["id"]] 
+
+connection {
+ type        = "ssh"
+ user        = "root"
+ private_key = var.ssh_private_key
+ host        = self.ipv4_address
+}
+
+provisioner "remote-exec" {
+  inline = [
+     "echo ${var.pass_for_dr} | sudo passwd --stdin root"
+  ]
+ }
 }
 
 resource "aws_route53_record" "www" {
