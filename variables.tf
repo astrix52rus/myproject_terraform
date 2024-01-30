@@ -34,10 +34,6 @@ variable "count1" {
 
 variable "pass_for_dr" {
   type      = string
-  sensitive = true
 }
 
-variable "ssh_private_key" {
-  type      = string
-}
 

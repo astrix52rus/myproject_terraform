@@ -37,13 +37,13 @@ resource "digitalocean_droplet" "web" {
 connection {
  type        = "ssh"
  user        = "root"
- private_key = var.ssh_private_key
+ private_key = "${file("~/.ssh/id_rsa")}"
  host        = self.ipv4_address
 }
 
 provisioner "remote-exec" {
   inline = [
-     "echo ${var.pass_for_dr} | sudo passwd --stdin root"
+     "echo 'root:${var.pass_for_dr}' | sudo chpasswd"
   ]
  }
 }
