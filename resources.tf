@@ -23,7 +23,13 @@ locals {
   names_for_droplets = [for i in range(1, var.count1 + 1) : format("%s-%d", "mydroplet", i)]
 }
 
-
+resource "random_password" "password" {
+  count            = var.count1  
+  length           = "6"
+  upper            = true
+  lower            = true
+  special          = false
+}
 
 resource "digitalocean_droplet" "web" {
   count    = var.count1
@@ -37,13 +43,13 @@ resource "digitalocean_droplet" "web" {
 connection {
  type        = "ssh"
  user        = "root"
- private_key = "file(var.path)"
+ private_key = file("${var.path}")
  host        = self.ipv4_address
 }
 
 provisioner "remote-exec" {
   inline = [
-     "echo 'root:${var.pass_for_dr}' | sudo chpasswd"
+     "echo 'root:${element(random_password.password.*.result, count.index)}' | sudo chpasswd"
   ]
  }
 }

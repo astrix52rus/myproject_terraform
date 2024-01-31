@@ -24,3 +24,11 @@ provider "registry.terraform.io/hashicorp/external" {
     "h1:e7RpnZ2PbJEEPnfsg7V0FNwbfSk0/Z3FdrLsXINBmDY=",
   ]
 }
+
+provider "registry.terraform.io/hashicorp/random" {
+  version     = "3.6.0"
+  constraints = "3.6.0"
+  hashes = [
+    "h1:R5Ucn26riKIEijcsiOMBR3uOAjuOMfI1x7XvH4P6B1w=",
+  ]
+}
