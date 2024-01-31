@@ -36,4 +36,6 @@ variable "pass_for_dr" {
   type      = string
 }
 
-
+variable "path" {
+  type = string
+}
