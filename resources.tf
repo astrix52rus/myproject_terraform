@@ -23,7 +23,7 @@ locals {
   names_for_droplets = [for i in range(1, var.count1 + 1) : format("%s-%d", "mydroplet", i)]
 }
 
-resource "random_string" "password" {
+resource "random_password" "password" {
   count            = var.count1  
   length           = "6"
   upper            = true
@@ -49,7 +49,7 @@ connection {
 
 provisioner "remote-exec" {
   inline = [
-     "echo 'root:${element(random_string.password.*.result, count.index)}' | sudo chpasswd"
+     "echo 'root:${element(random_string.password[*].result, count.index)}' | sudo chpasswd"
   ]
  }
 }

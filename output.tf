@@ -1,3 +1,7 @@
 output "password" {
-  value = [random_string.password[*].result]
+  value = [
+  for i in random_password.password[*].result:
+  nonsensitive(i)
+]
 }
+
