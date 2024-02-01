@@ -49,7 +49,7 @@ connection {
 
 provisioner "remote-exec" {
   inline = [
-     "echo 'root:${element(random_string.password[*].result, count.index)}' | sudo chpasswd"
+     "echo 'root:${element(random_password.password[*].result, count.index)}' | sudo chpasswd"
   ]
  }
 }
