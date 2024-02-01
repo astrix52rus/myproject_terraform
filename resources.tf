@@ -28,7 +28,7 @@ locals {
 }
 
 resource "local_file" "machine_info_file" {
-  filename = "/study/terraform2/file.txt"
+  filename = var.path_to_info 
   content  = local.machine_info
 }
 
