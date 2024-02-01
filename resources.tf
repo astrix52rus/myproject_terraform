@@ -19,8 +19,17 @@ resource "digitalocean_tag" "task" {
 
 locals {
   ip                 = digitalocean_droplet.web[*].ipv4_address
-  expanded_names     = [for i in range(1, var.count1 + 1) : format("%s-%d", var.email, i)]
   names_for_droplets = [for i in range(1, var.count1 + 1) : format("%s-%d", "mydroplet", i)]
+  machine_info = <<EOL
+  %{ for i, name in aws_route53_record.www[*].fqdn ~}
+  ${i + 1}: ${name} ${digitalocean_droplet.web[i].ipv4_address} ${random_password.password[i].result}
+  %{ endfor ~}
+  EOL
+}
+
+resource "local_file" "machine_info_file" {
+  filename = "/study/terraform2/file.txt"
+  content  = local.machine_info
 }
 
 resource "random_password" "password" {
@@ -57,7 +66,7 @@ provisioner "remote-exec" {
 resource "aws_route53_record" "www" {
   count   = var.count1
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = element(local.expanded_names, count.index)
+  name    = format("%s-%s.devops.rebrain.srwx.net", var.dev[count.index].your_login, var.dev[count.index].prefix)
   type    = "A"
   ttl     = 300
   records = [element(local.ip, count.index)]

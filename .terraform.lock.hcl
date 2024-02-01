@@ -25,6 +25,13 @@ provider "registry.terraform.io/hashicorp/external" {
   ]
 }
 
+provider "registry.terraform.io/hashicorp/local" {
+  version = "2.4.1"
+  hashes = [
+    "h1:FzraUapGrJoH3ZOWiUT2m6QpZAD+HmU+JmqZgM4/o2Y=",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/random" {
   version     = "3.6.0"
   constraints = "3.6.0"

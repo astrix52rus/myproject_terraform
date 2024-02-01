@@ -26,8 +26,6 @@ variable "secret_key" {
   sensitive = true
 }
 
-#Переменная используется для запуска указанного колличества машин
-
 variable "count1" {
   type = number
 }
@@ -38,4 +36,15 @@ variable "pass_for_dr" {
 
 variable "path" {
   type = string
+}
+
+variable "dev" {
+  type = list(object({
+    prefix     = string
+    your_login = string
+  }))
+}
+
+variable "path_to_info" {
+  type      = string
 }
