@@ -1,9 +1,16 @@
-ssh_key_id    = ""
+ssh_key_id    = "" # id ssh ключа в digitalocean
 email      = ""
-task       = ""
-token      = ""
-secret_key = ""
-access_key = ""
-count1     = ""
-pass_for_dr = ""
-path = ""
+task       = "" #Номер практического задания 
+token      = "" #digitalocean
+secret_key = "" # AWS 
+access_key = "" # AWS 
+count1     = "" # количество создаваемых ресурсов 
+pass_for_dr = "" 
+path = "" # путь до закрытого ключа в системе для того что бы подключиться к созданной VM и установить пароль 
+dev = [
+  { prefix = "", your_login = "" }, # prefix - назначение создаваемой VM
+  { prefix = "", your_login = "" }, # your_login - логин пользователя 
+  { prefix = "", your_login = "" }
+]
+path_to_info = "" #Путь к файлу в котором будем выводиться информация о созданной инфраструктуре в формате <порядковый номер>: <DNS имя машины> <ip машины> <пароль пользователя root>
+
