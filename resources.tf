@@ -20,16 +20,15 @@ resource "digitalocean_tag" "task" {
 locals {
   ip                 = digitalocean_droplet.web[*].ipv4_address
   names_for_droplets = [for i in range(1, var.count1 + 1) : format("%s-%d", "mydroplet", i)]
-  machine_info = <<EOL
-  %{ for i, name in aws_route53_record.www[*].fqdn ~}
-  ${i + 1}: ${name} ${digitalocean_droplet.web[i].ipv4_address} ${random_password.password[i].result}
-  %{ endfor ~}
-  EOL
 }
 
 resource "local_file" "machine_info_file" {
   filename = var.path_to_info 
-  content  = local.machine_info
+  content  = templatefile("${path.module}/machine_info.tpl", {
+    ip = local.ip,
+    password = random_password.password[*].result,
+    fqdn = aws_route53_record.www[*].fqdn
+  })
 }
 
 resource "random_password" "password" {
@@ -52,7 +51,7 @@ resource "digitalocean_droplet" "web" {
 connection {
  type        = "ssh"
  user        = "root"
- private_key = file("${var.path}")
+ private_key = file(var.path)
  host        = self.ipv4_address
 }
 
